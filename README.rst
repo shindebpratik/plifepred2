@@ -64,10 +64,10 @@ Project Contents and Required Files
 ===================================
 
 Keep the model and support files in the locations expected by the script. The
-following is the default layout referenced by ``plifepred2_master_v4.py``::
+following is the default layout referenced by ``plifepred2.py``::
 
    PLifePred2/
-   |-- plifepred2_master_v4.py
+   |-- plifepred2.py
    |-- default_regression_models.py
    |-- comp/
    |   |-- pfeature_comp.py
@@ -99,14 +99,14 @@ Important files
 * ``models/mordred-community/`` -- vendored Mordred-community source used to
   calculate molecular descriptors. Keep this directory intact and unchanged.
 * ``default_regression_models.py`` -- compatibility module required when the
-  structure model is loaded. Keep it beside ``plifepred2_master_v4.py``.
+  structure model is loaded. Keep it beside ``plifepred2.py``.
 * ``comp/pfeature_comp.py`` -- Pfeature entry point used by the current script.
   The complete Pfeature installation and all of its required data/resources
   must also be present in the layout expected by Pfeature; copying this single
   Python file alone is not sufficient.
 
 The paths above are relative to the directory containing
-``plifepred2_master_v4.py``, not the directory from which the command is run.
+``plifepred2.py``, not the directory from which the command is run.
 The script's default Pfeature path is ``comp/pfeature_comp.py``. If Pfeature is
 stored elsewhere in your distribution, update ``DEFAULT_PFEATURE`` near the
 top of the script to match that location.
@@ -171,8 +171,7 @@ General syntax
 
 .. code-block:: bash
 
-   python plifepred2_master_v4.py --mode MODE --input INPUT [INPUT ...] \
-       --output OUTPUT [OPTIONS]
+   python plifepred2.py --mode MODE --input INPUT [INPUT ...] --output OUTPUT [OPTIONS]
 
 The script can be launched from another working directory. Model and feature
 paths are resolved relative to the script, while relative input and output
@@ -216,10 +215,7 @@ modification flags are set to zero.
 
 .. code-block:: bash
 
-   python plifepred2_master_v4.py \
-       --mode natural \
-       --input peptides.fasta \
-       --output natural_predictions.tsv
+   python plifepred2.py  --mode natural --input peptides.fasta --output natural_predictions.tsv
 
 2. Modified peptide sequence
 ----------------------------
@@ -245,11 +241,7 @@ Example using flag names:
 
 .. code-block:: bash
 
-   python plifepred2_master_v4.py \
-       --mode modified \
-       --input peptides.fasta \
-       --modifications d,ct \
-       --output modified_predictions.tsv
+   python plifepred2.py --mode modified --input peptides.fasta --modifications d,ct --output modified_predictions.tsv
 
 The script also accepts the legacy numeric labels ``0`` to ``4``:
 
@@ -284,19 +276,13 @@ Example:
 
 .. code-block:: bash
 
-   python plifepred2_master_v4.py \
-       --mode smiles \
-       --input molecules.smi \
-       --output smiles_predictions.tsv
+   python plifepred2.py --mode smiles --input molecules.smi --output smiles_predictions.tsv
 
 Multiple SMILES files can be processed together:
 
 .. code-block:: bash
 
-   python plifepred2_master_v4.py \
-       --mode smiles \
-       --input batch_1.smi batch_2.smi batch_3.smi \
-       --output smiles_predictions.tsv
+   python plifepred2.py --mode smiles --input batch_1.smi batch_2.smi batch_3.smi --output smiles_predictions.tsv
 
 The script canonicalizes valid input SMILES before writing them to the output.
 Invalid SMILES cause the run to stop with an error identifying the input
@@ -309,10 +295,7 @@ Use ``--mode structure`` to predict from one or more PDB files:
 
 .. code-block:: bash
 
-   python plifepred2_master_v4.py \
-       --mode structure \
-       --input peptide_1.pdb peptide_2.pdb \
-       --output structure_predictions.tsv
+   python plifepred2.py --mode structure --input peptide_1.pdb peptide_2.pdb --output structure_predictions.tsv
 
 **PDB input requirements:** provide a PDB containing the peptide or molecule
 to be evaluated, not a complete protein-receptor complex. The current
@@ -349,11 +332,7 @@ Run the natural design workflow with:
 
 .. code-block:: bash
 
-   python plifepred2_master_v4.py \
-       --mode natural \
-       --design \
-       --input peptides.fasta \
-       --output natural_design.tsv
+   python plifepred2.py --mode natural --design --input peptides.fasta --output natural_design.tsv
 
 2. Modified peptide design
 --------------------------
@@ -364,11 +343,7 @@ acid sequence itself is not mutated in this workflow.
 
 .. code-block:: bash
 
-   python plifepred2_master_v4.py \
-       --mode modified \
-       --design \
-       --input peptides.fasta \
-       --output modification_design.tsv
+   python plifepred2.py --mode modified  --design --input peptides.fasta --output modification_design.tsv
 
 When ``--design`` is used with ``--mode modified``, any supplied
 ``--modifications``/``--mods`` value is ignored because all 32 combinations
@@ -422,10 +397,7 @@ Multiple sequence files can be passed in one command:
 
 .. code-block:: bash
 
-   python plifepred2_master_v4.py \
-       --mode natural \
-       --input group_1.fasta group_2.fasta additional_sequences.txt \
-       --output combined_predictions.tsv
+   python plifepred2.py --mode natural --input group_1.fasta group_2.fasta additional_sequences.txt --output combined_predictions.tsv
 
 FASTA record IDs are taken from the first whitespace-delimited token in each
 header. Duplicate IDs across input files are made unique automatically.
@@ -543,7 +515,7 @@ removed when the program finishes. To retain them, provide ``--workdir``:
 
 .. code-block:: bash
 
-   python plifepred2_master_v4.py \
+   python plifepred2.py \
        --mode smiles \
        --input molecules.smi \
        --output smiles_predictions.tsv \
